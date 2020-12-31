@@ -23,4 +23,7 @@
   4. Add a clear_shelf instance method
      - clear_shelfshould remove all unbanked points.
 
+Latest PR: https://github.com/okayjones/game-of-greed/pull/4
+
+
 
