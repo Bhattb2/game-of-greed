@@ -42,12 +42,13 @@ class Game:
 
         ## Roll the dice
         print("Rolling 6 dice...")
-        roll = GameLogic.roll_dice(6)
+        roll = self._roller(6)
         formatted_roll = ' '.join(map(str, (roll)))
+
         print("*** ", formatted_roll, " ***")
 
         #ask user for values
-        user_input = input("Enter dice to keep, or (q)uit: \n> ")
+        user_input = input("Enter dice to keep, or (q)uit:\n> ")
 
         #keep playing until the user quits
         while user_input != "q":
