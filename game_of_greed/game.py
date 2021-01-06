@@ -36,9 +36,26 @@ class Game:
         print("OK. Maybe another time")
 
     def start_game(self):
-        # TODO: um, the game
-        pass
+        #increment and start round
+        self.round_num += 1
+        print(f"Starting round {self.round_num}")
 
+        ## Roll the dice
+        print("Rolling 6 dice...")
+        roll = self._roller(6)
+        formatted_roll = ' '.join(map(str, (roll)))
+
+        print("*** ", formatted_roll, " ***")
+
+        #ask user for values
+        user_input = input("Enter dice to keep, or (q)uit:\n> ")
+
+        #keep playing until the user quits
+        while user_input != "q":
+            break
+        
+        # if they quit, print quit message
+        print("Thanks for playing. You earned 0 points")
 
 if __name__ == "__main__":
     game = Game()
