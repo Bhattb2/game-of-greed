@@ -3,7 +3,6 @@ from game_of_greed.banker import Banker
 
 
 class Game:
-    # game_of_greed.
     """Class for Game of Greed application
     """
 
@@ -48,13 +47,13 @@ class Game:
 
         #keep playing until the user quits
         if user_input != "q":
-            dice_result = int(user_input)
-            list_dice = []
-            list_dice.append(dice_result)
-            score = GameLogic.calculate_score(tuple(list_dice))
+            dice_result = []
+            for char in user_input:
+                dice_result.append(int(char))   
+            score = GameLogic.calculate_score(tuple(dice_result))
             self.banker.shelf(score)
             shelved = self.banker.shelved
-            dice_remaining = self.dice_num - len(list_dice)
+            dice_remaining = self.dice_num - len(dice_result)
             print(f"You have {shelved} unbanked points and {dice_remaining} dice remaining")
             bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
             if bank_decision == "r" or bank_decision == "roll":
