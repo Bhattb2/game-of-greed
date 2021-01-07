@@ -4,9 +4,9 @@ class Banker:
         self.balance = balance 
         self.shelved = shelved
     
-    def shelf(self, dice_rolled):
+    def shelf(self, score):
         #store unbanked points
-        self.shelved += dice_rolled
+        self.shelved += score
         return self.shelved
 
     def bank(self):
