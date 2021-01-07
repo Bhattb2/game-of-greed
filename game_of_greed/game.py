@@ -35,8 +35,11 @@ class Game:
         print("OK. Maybe another time")
 
     def new_round():
+        pass
 
     def start_game(self):
+        # for i in range(1, self.round_num):
+
         #increment and start round
         self.round_num += 1
         print(f"Starting round {self.round_num}")
@@ -51,7 +54,7 @@ class Game:
         user_input = input("Enter dice to keep, or (q)uit:\n> ")
 
         #keep playing until the user quits
-        while user_input != "q":
+        if user_input != "q":
             dice_result = int(user_input)
             list_dice = []
             list_dice.append(dice_result)
@@ -63,19 +66,27 @@ class Game:
             bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
             if bank_decision == "r" or bank_decision == "roll":
                 print("Feature not yet supported.")
-                break
+                return
             if bank_decision == "b" or bank_decision == "bank":
                 self.banker.bank()
                 print(f"You banked {score} points in round {self.round_num}")
                 print(f"Total score is {self.banker.balance} points")
                 self.round_num += 1
                 print(f"Starting round {self.round_num}")
+                print("Rolling 6 dice...")
+                roll = self._roller(6)
+                formatted_roll = ' '.join(map(str, (roll)))
+                print("*** ", formatted_roll, " ***")
+                user_input = input("Enter dice to keep, or (q)uit:\n> ")
+                print(f"Thanks for playing. You earned {self.banker.balance} points")
+                return
             if bank_decision == "q" or bank_decision == "quit":
                 print(f"Thanks for playing. You earned {self.banker.balance} points")
-                break        
+                return       
         
         # if they quit, print quit message
-        print("Thanks for playing. You earned 0 points")
+        else: 
+            print("Thanks for playing. You earned 0 points")
 
 if __name__ == "__main__":
     game = Game()
