@@ -1,5 +1,5 @@
-from game_logic import GameLogic
-from banker import Banker
+from game_of_greed.game_logic import GameLogic
+from game_of_greed.banker import Banker
 
 
 class Game:
@@ -34,6 +34,10 @@ class Game:
     def decline_game(self):
         print("OK. Maybe another time")
 
+    def thanks_for_playing(self):
+        print(f"Thanks for playing. You earned {self.banker.balance} points")
+        exit()
+
     def new_round(self):
         ## Roll the dice
         print("Rolling 6 dice...")
@@ -65,20 +69,17 @@ class Game:
                 print(f"Total score is {self.banker.balance} points")
                 return
             if bank_decision == "q" or bank_decision == "quit":
-                print(f"Thanks for playing. You earned {self.banker.balance} points")
-                exit()      
-        
+                self.thanks_for_playing()      
         # if they quit, print quit message
         else: 
-            print(f"Thanks for playing. You earned {self.banker.balance} points")
-            exit() 
-
+            self.thanks_for_playing()
+    
     def start_game(self):
         for i in range(1, self.num_rounds):
             self.round_num += 1
             print(f"Starting round {self.round_num}")
             self.new_round()
-        
+
 
 if __name__ == "__main__":
     game = Game()
