@@ -1,5 +1,5 @@
 import pytest
-from tests.greed_2.flo import diff
+from tests.flo import diff
 from game_of_greed.game import Game
 
 pytestmark = [pytest.mark.version_2, pytest.mark.version_3]

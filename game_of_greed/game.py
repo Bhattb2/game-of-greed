@@ -1,6 +1,6 @@
 from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
-
+import sys
 
 class Game:
     """Class for Game of Greed application
@@ -36,9 +36,19 @@ class Game:
 
     def thanks_for_playing(self):
         print(f"Thanks for playing. You earned {self.banker.balance} points")
-        exit()
+        sys.exit()
 
-    def new_round(self):
+    def shelf_dice(self, selected_die):
+        dice_result = []
+        for char in selected_die:
+            dice_result.append(int(char))   
+        score = GameLogic.calculate_score(tuple(dice_result))
+        self.banker.shelf(score)
+        shelved = self.banker.shelved
+        dice_remaining = self.dice_num - len(dice_result)
+        print(f"You have {shelved} unbanked points and {dice_remaining} dice remaining")
+
+    def roll_the_dice(self):
         ## Roll the dice
         print("Rolling 6 dice...")
         roll = self._roller(6)
@@ -46,27 +56,28 @@ class Game:
 
         print("*** ", formatted_roll, " ***")
 
+    def bank_points(self):
+        round_score = self.banker.shelved
+        self.banker.bank()
+        print(f"You banked {round_score} points in round {self.round_num}")
+        print(f"Total score is {self.banker.balance} points")
+
+    def new_round(self):
+        ## Roll the dice
+        self.roll_the_dice()
+
         #ask user for values
         user_input = input("Enter dice to keep, or (q)uit:\n> ")
 
         #keep playing until the user quits
         if user_input != "q":
-            dice_result = []
-            for char in user_input:
-                dice_result.append(int(char))   
-            score = GameLogic.calculate_score(tuple(dice_result))
-            self.banker.shelf(score)
-            shelved = self.banker.shelved
-            dice_remaining = self.dice_num - len(dice_result)
-            print(f"You have {shelved} unbanked points and {dice_remaining} dice remaining")
+            self.shelf_dice(user_input)
             bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
             if bank_decision == "r" or bank_decision == "roll":
                 print("Feature not yet supported.")
                 return
             if bank_decision == "b" or bank_decision == "bank":
-                self.banker.bank()
-                print(f"You banked {score} points in round {self.round_num}")
-                print(f"Total score is {self.banker.balance} points")
+                self.bank_points()
                 return
             if bank_decision == "q" or bank_decision == "quit":
                 self.thanks_for_playing()      
