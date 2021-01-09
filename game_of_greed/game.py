@@ -66,7 +66,8 @@ class Game:
     def user_input_to_tuple(self, input):
         selected_die = []
         for char in input:
-            selected_die.append(int(char))
+            if char != ' ':
+                selected_die.append(int(char))
         return tuple(selected_die)
 
     def new_round(self):
