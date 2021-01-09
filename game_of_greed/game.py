@@ -1,5 +1,5 @@
-from game_logic import GameLogic
-from banker import Banker
+from game_of_greed.game_logic import GameLogic
+from game_of_greed.banker import Banker
 import sys
 
 class Game:
@@ -76,26 +76,34 @@ class Game:
         #ask user for values
         user_input = input("Enter dice to keep, or (q)uit:\n> ")
         #keep playing until the user quits
-        if user_input != "q":  
+        
+        while user_input != "q":  
+
+            # convert input to tuple
             tuple_die = self.user_input_to_tuple(user_input)
-            while not GameLogic.validate_keepers(roll, tuple_die): 
+
+            # validate the input
+            if not GameLogic.validate_keepers(roll, tuple_die): 
                 print("Cheater!!! Or possibly made a typo...")
                 self.print_roll(roll)
+
+                # ask for input again, restart loop
                 user_input = input("Enter dice to keep, or (q)uit:\n> ")
-                tuple_die = self.user_input_to_tuple(user_input)
-            self.shelf_dice(tuple_die)
-            bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
-            if bank_decision == "r" or bank_decision == "roll":
-                print("Feature not yet supported.")
-                return
-            if bank_decision == "b" or bank_decision == "bank":
-                self.bank_points()
-                return
-            if bank_decision == "q" or bank_decision == "quit":
-                self.thanks_for_playing()      
+
+            else:   
+                self.shelf_dice(tuple_die)
+
+                bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
+                if bank_decision == "r" or bank_decision == "roll":
+                    print("Feature not yet supported.")
+                    return
+                if bank_decision == "b" or bank_decision == "bank":
+                    self.bank_points()
+                    return
+                if bank_decision == "q" or bank_decision == "quit":
+                    self.thanks_for_playing()      
         # if they quit, print quit message
-        else: 
-            self.thanks_for_playing()
+        self.thanks_for_playing()
     
     def start_game(self):
         for i in range(1, self.num_rounds):
