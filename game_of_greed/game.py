@@ -1,8 +1,9 @@
-from game_of_greed.game_logic import GameLogic
-from game_of_greed.banker import Banker
+from game_logic import GameLogic
+from banker import Banker
 import sys
 
 class Game:
+    #game_of_greed.
     """Class for Game of Greed application
     """
 
@@ -38,22 +39,22 @@ class Game:
         print(f"Thanks for playing. You earned {self.banker.balance} points")
         sys.exit()
 
-    def shelf_dice(self, selected_die):
-        dice_result = []
-        for char in selected_die:
-            dice_result.append(int(char))   
-        score = GameLogic.calculate_score(tuple(dice_result))
+    def shelf_dice(self, selected_die):   
+        score = GameLogic.calculate_score(selected_die)
         self.banker.shelf(score)
         shelved = self.banker.shelved
-        dice_remaining = self.dice_num - len(dice_result)
+        dice_remaining = self.dice_num - len(selected_die)
         print(f"You have {shelved} unbanked points and {dice_remaining} dice remaining")
 
     def roll_the_dice(self):
         ## Roll the dice
         print("Rolling 6 dice...")
         roll = self._roller(6)
-        formatted_roll = ' '.join(map(str, (roll)))
+    
+        return roll
 
+    def print_roll(self, roll):
+        formatted_roll = ' '.join(map(str, (roll)))
         print("*** ", formatted_roll, " ***")
 
     def bank_points(self):
@@ -62,16 +63,27 @@ class Game:
         print(f"You banked {round_score} points in round {self.round_num}")
         print(f"Total score is {self.banker.balance} points")
 
+    def user_input_to_tuple(self, input):
+        selected_die = []
+        for char in input:
+            selected_die.append(int(char))
+        return tuple(selected_die)
+
     def new_round(self):
         ## Roll the dice
-        self.roll_the_dice()
-
+        roll = self.roll_the_dice()
+        self.print_roll(roll)
         #ask user for values
         user_input = input("Enter dice to keep, or (q)uit:\n> ")
-
         #keep playing until the user quits
-        if user_input != "q":
-            self.shelf_dice(user_input)
+        if user_input != "q":  
+            tuple_die = self.user_input_to_tuple(user_input)
+            while not GameLogic.validate_keepers(roll, tuple_die): 
+                print("Cheater!!! Or possibly made a typo...")
+                self.print_roll(roll)
+                user_input = input("Enter dice to keep, or (q)uit:\n> ")
+                tuple_die = self.user_input_to_tuple(user_input)
+            self.shelf_dice(tuple_die)
             bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
             if bank_decision == "r" or bank_decision == "roll":
                 print("Feature not yet supported.")
