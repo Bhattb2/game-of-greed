@@ -15,7 +15,6 @@ class GameLogic:
             roll.remove(die) 
         return True
 
-
     @staticmethod    
     def roll_dice(dice_available:int) -> int:
         '''
@@ -64,3 +63,19 @@ class GameLogic:
             roll_common = roll_common[1:]
 
         return score
+
+    @staticmethod
+    def get_scorers(dice:tuple) -> tuple:
+        
+        all_dice_score = GameLogic.calculate_score(dice)
+        scorers = []
+
+        #credit: help from Roger here
+        if all_dice_score:
+            for i in range(len(dice)):
+                sub_roll = dice[:i] + dice[i + 1:]
+                sub_score = GameLogic.calculate_score(sub_roll)
+                if sub_score != all_dice_score:
+                    scorers.append(dice[i])
+
+        return tuple(scorers)
