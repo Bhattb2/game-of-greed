@@ -6,6 +6,16 @@ class GameLogic:
     def __init__(self, current_round=1):
         self.current_round = current_round
 
+    @staticmethod
+    def validate_keepers(roll:tuple, keepers:tuple) -> bool:
+        roll = list(roll)
+        for die in keepers:
+            if die not in roll:
+                return False
+            roll.remove(die) 
+        return True
+
+
     @staticmethod    
     def roll_dice(dice_available:int) -> int:
         '''
