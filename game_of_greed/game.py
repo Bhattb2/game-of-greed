@@ -1,5 +1,5 @@
-from game_of_greed.game_logic import GameLogic
-from game_of_greed.banker import Banker
+from game_logic import GameLogic
+from banker import Banker
 import sys
 
 class Game:
@@ -50,9 +50,16 @@ class Game:
         ## Roll the dice
         print("Rolling 6 dice...")
         roll = self._roller(6)
-    
         return roll
 
+    def roll_again(self, selected_die):
+        self.banker.clear_shelf()
+        dice_remaining = self.dice_num - len(selected_die)
+        int(dice_remaining)
+        new_roll = GameLogic.roll_dice(dice_remaining)
+        self.print_roll(new_roll)
+        return
+        
     def print_roll(self, roll):
         formatted_roll = ' '.join(map(str, (roll)))
         print("*** ", formatted_roll, " ***")
@@ -90,14 +97,11 @@ class Game:
 
                 # ask for input again, restart loop
                 user_input = input("Enter dice to keep, or (q)uit:\n> ")
-
             else:   
                 self.shelf_dice(tuple_die)
-
                 bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
                 if bank_decision == "r" or bank_decision == "roll":
-                    print("Feature not yet supported.")
-                    return
+                    self.roll_again(tuple_die) 
                 if bank_decision == "b" or bank_decision == "bank":
                     self.bank_points()
                     return
