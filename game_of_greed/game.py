@@ -58,7 +58,20 @@ class Game:
         int(dice_remaining)
         new_roll = GameLogic.roll_dice(dice_remaining)
         self.print_roll(new_roll)
-        return
+        if GameLogic.calculate_score(new_roll) == 0:
+            print("You Zilched, hoe")
+            self.thanks_for_playing()
+        else:
+            new_score = GameLogic.calculate_score(new_roll)
+            self.banker.shelf(new_score)
+            user_input = input("Enter dice to keep, or (q)uit:\n> ")
+            if user_input == "q":
+                self.thanks_for_playing()
+            else:
+                tuple_die = self.user_input_to_tuple(user_input)
+                self.roll_again(tuple_die)
+            
+    
         
     def print_roll(self, roll):
         formatted_roll = ' '.join(map(str, (roll)))
