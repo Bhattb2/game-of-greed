@@ -3,7 +3,6 @@ from game_of_greed.banker import Banker
 import sys
 
 class Game:
-    #game_of_greed.
     """Class for Game of Greed application
     """
 
@@ -52,7 +51,15 @@ class Game:
         roll = self._roller(self.remaining_die_count)
         self.print_roll(roll)
         return roll
-        
+
+    def zilch(self):
+        print("""****************************************
+**        Zilch!!! Round over         **
+****************************************""")
+        self.banker.clear_shelf()
+        self.bank_points()
+
+
     def print_roll(self, roll):
         formatted_roll = ' '.join(map(str, (roll)))
         print("*** ", formatted_roll, " ***")
@@ -93,7 +100,12 @@ class Game:
                 self.shelf_dice(tuple_die)
                 bank_decision = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
                 if bank_decision == "r" or bank_decision == "roll":
+                    if self.remaining_die_count == 0:
+                        self.remaining_die_count = 6
                     roll = self.roll_the_dice()
+                    if GameLogic.calculate_score(roll) == 0:
+                        self.zilch()
+                        return
                     user_input = input("Enter dice to keep, or (q)uit:\n> ")
                 if bank_decision == "b" or bank_decision == "bank":
                     self.bank_points()
