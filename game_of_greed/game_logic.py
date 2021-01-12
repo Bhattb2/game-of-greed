@@ -6,6 +6,15 @@ class GameLogic:
     def __init__(self, current_round=1):
         self.current_round = current_round
 
+    @staticmethod
+    def validate_keepers(roll:tuple, keepers:tuple) -> bool:
+        roll = list(roll)
+        for die in keepers:
+            if die not in roll:
+                return False
+            roll.remove(die) 
+        return True
+
     @staticmethod    
     def roll_dice(dice_available:int) -> int:
         '''
@@ -54,3 +63,19 @@ class GameLogic:
             roll_common = roll_common[1:]
 
         return score
+
+    @staticmethod
+    def get_scorers(dice:tuple) -> tuple:
+        
+        all_dice_score = GameLogic.calculate_score(dice)
+        scorers = []
+
+        #credit: help from Roger here
+        if all_dice_score:
+            for i in range(len(dice)):
+                sub_roll = dice[:i] + dice[i + 1:]
+                sub_score = GameLogic.calculate_score(sub_roll)
+                if sub_score != all_dice_score:
+                    scorers.append(dice[i])
+
+        return tuple(scorers)

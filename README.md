@@ -1,6 +1,6 @@
-# Collaborators: Logan Jones, Bhagirath Bhatt, Karlo Mangubat,  Sean Hawkins
-## Road Map:
-### 1st Milestone
+#### Collaborators: Logan Jones, Bhagirath Bhatt, Karlo Mangubat,  Sean Hawkins
+# Road Map:
+## 1st Milestone
 ### Features
 - Define a GameLogic class.
 - Handle calculating score for dice roll
@@ -25,5 +25,25 @@
 
 Latest PR: https://github.com/okayjones/game-of-greed/pull/5
 
+# 2nd Milestone
+## Features
+- Application should implement all features from previous version
+- Application should simulate rolling between 1 and 6 dice
+- Application should allow user to set aside dice each roll
+- Application should allow “banking” current score or rolling again.
+- Application should keep track of total score
+- Application should keep track of current round
+- Application should have automated tests to ensure proper operation
 
+Latest PR:
 
+# 3rd Milestone
+## Features
+- Application should implement features from versions 1 and 2
+- Should handle when cheating occurs.
+  - Or just typos.
+  - E.g. roll = [1,3,5,2] and user selects 1, 1, 1, 1, 1, 1
+- Should allow user to continue rolling with 6 new dice when all dice have scored in current turn.
+- Handle zilch
+  - No points for round, and round is over ensure proper operation
+Latest PR
